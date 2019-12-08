@@ -6,7 +6,7 @@ import SignIn from './components/SignIn/SignIn'
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="container">
       <hr />
       <Header />
       <hr />
