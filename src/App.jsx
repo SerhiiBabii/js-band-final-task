@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from "./components/Header/Header";
 import Cart from './components/Cart/Cart'
+import Book from './components/Book/Book'
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Header />
       <hr />
       <Cart />
+      <Book />
     </div>
   );
 }
