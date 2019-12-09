@@ -1,5 +1,6 @@
 import React from 'react';
 import BookItem from './BookItem';
+import Filters from '../Filters/Filters'
 
 const BookList = () => {
   // array below for testing book list
@@ -27,8 +28,13 @@ const BookList = () => {
     },
   ]
   return (
-    <div className="row">
-      {cart.map((item)=> <BookItem key={item.id} book={item} />)}
+    <div className="row p-3">
+      <div className="col-10">
+        <Filters />
+      </div>
+      <div className="row">
+        {cart.map((item)=> <BookItem key={item.id} book={item} />)}
+      </div>
     </div>
   )
 }
