@@ -30,4 +30,16 @@ export default class CallApi {
       },
     });
   }
+
+  static post(url, body) {
+    return fetchApi(`${API_URL}${url}`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  }
 }
