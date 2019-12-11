@@ -1,4 +1,5 @@
 import React from 'react';
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Cart from './components/Cart/Cart'
 import Book from './components/Book/Book'
@@ -8,16 +9,23 @@ import BookList from './components/BookList/BookList'
 
 const App = () => {
   return (
-    <div className="container">
-      <hr />
-      <Header />
-      <hr />
-      <Cart />
-      <Book />
-      <SignIn />
-      <NotFound />
-      <BookList />
-    </div>
+    <Router>
+      <div className="container">
+        <hr />
+        <Header />
+        <hr />
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/signin" />
+          </Route>
+          <Route path="/signin" component={SignIn} /> 
+          <Route path="/books" component={BookList} /> 
+          <Route path="/book/:id" component={Book} />
+          <Route path="/cart" component={Cart} />
+          <Route exact path="*" component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
