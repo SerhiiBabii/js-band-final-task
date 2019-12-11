@@ -1,8 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const BookItem = ({book}) => {
-  const {cover, title, author, price} = book;
+  const {id, cover, title, author, price} = book;
   const image = cover || 'images/imageNotFound.png'
   return (
     <div className="cart row col-3 border m-4 p-3">
@@ -15,7 +16,7 @@ const BookItem = ({book}) => {
           {' '}
           {price}
         </span>
-        <button className="btn btn-secondary col-4" type="button">View</button>
+        <Link to={`/book/${id}`} className="btn btn-secondary col-4">View</Link>
       </p>
     </div>
   )
