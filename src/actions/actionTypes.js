@@ -1,0 +1,21 @@
+export const SIGNOUT = 'SIGNUOT';
+
+export const SIGNIN = 'SIGNIN';
+
+export const FETCH_BOOKS_REQUEST = 'FETCHS_BOOK_REQUEST';
+
+export const FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS';
+
+export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
+
+export const FETCH_BOOK_REQUEST = 'FETCH_BOOK_REQUEST';
+
+export const FETCH_BOOK_SUCCESS = 'FETCH_BOOK_SUCCESS';
+
+export const FETCH_BOOK_FAILURE = 'FETCH_BOOK_FAILURE';
+
+export const ADD_BOOK = 'ADD_BOOK';
+
+export const SEND_BOOK = 'SEND_BOOKS';
+
+export const SHOW_FILTERED_BOOKS = 'SHOW_FILTERED_BOOKS';
