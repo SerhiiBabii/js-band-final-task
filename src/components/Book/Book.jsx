@@ -1,28 +1,13 @@
-import React, { Component } from 'react';
-// import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types'
 import BookPrice from './BookPrice';
+import Spinner from '../../spinner/spinner'
 
-export default class Book extends Component {
-  constructor() {
-    super();
-    this.state = {
-      movie: [],
-    }
-  }
+const Book = ({loading, book, book: {title, author, description, cover, tags, level, count, price}}) => {
+  const posterImage = cover || './images/imageNotFound.png';
 
-  render() {
-    const {
-      movie:{
-        title,
-        author,
-        level,
-        description,
-        cover,
-        tags,
-      },
-    } = this.state;
-    const posterImage = cover || './images/imageNotFound.png';
-    return (
+  return (
+    (book.title && !loading) ? (
       <div className="m-3">
         <div className="row">
           <img className="col-4" src={posterImage} alt="poster" />
@@ -49,7 +34,7 @@ export default class Book extends Component {
             </p>
           </div>
           <div className="col-4">
-            <BookPrice />
+            <BookPrice price={price} maxBooks={count} />
           </div>
         </div>
         <p>
@@ -57,6 +42,13 @@ export default class Book extends Component {
           {description}
         </p>
       </div>
-    )
-  }
+    ) : <Spinner />
+  )
 }
+
+Book.propTypes = {
+  book: PropTypes.instanceOf(Object).isRequired,
+  loading: PropTypes.bool.isRequired,
+}
+
+export default Book;
