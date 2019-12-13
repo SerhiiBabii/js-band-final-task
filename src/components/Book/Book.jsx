@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux';
+import {bookRequest, bookSuccess, bookFailure} from '../../actions/actions';
 import BookPrice from './BookPrice';
-import Spinner from '../../spinner/spinner'
+import Spinner from '../../spinner/spinner';
 
 const Book = ({loading, book, book: {title, author, description, cover, tags, level, count, price}}) => {
   const posterImage = cover || './images/imageNotFound.png';
@@ -51,4 +53,16 @@ Book.propTypes = {
   loading: PropTypes.bool.isRequired,
 }
 
-export default Book;
+const mapStateToProps = (state) => ({
+  book: state.books.book,
+  loading: state.books.loading,
+  token: state.books.user.token,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchBookRequest: () => dispatch(bookRequest()),
+  fetchBookSuccess: (book) => dispatch(bookSuccess(book)),
+  fetchBookFailure: (error) => dispatch(bookFailure(error)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);
