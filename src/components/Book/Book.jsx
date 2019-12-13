@@ -1,11 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux';
 import {bookRequest, bookSuccess, bookFailure} from '../../actions/actions';
 import BookPrice from './BookPrice';
 import Spinner from '../../spinner/spinner';
+import CallApi from '../../api/api';
 
-const Book = ({loading, book, book: {title, author, description, cover, tags, level, count, price}}) => {
+const Book = ({
+  match,
+  token,
+  loading,
+  book,
+  book: {
+    title,
+    author,
+    description,
+    cover, tags,
+    level,
+    count,
+    price,
+  },
+  fetchBookSuccess,
+  fetchBookRequest,
+  fetchBookFailure,
+}) => {
+  
+  useEffect(() => {
+    CallApi.get(`/books/${match.params.id}`, token)
+    .then((data) => {
+      fetchBookRequest();
+      setTimeout(() => fetchBookSuccess(data), 2000);
+  })
+  }, [fetchBookRequest, fetchBookSuccess, match.params.id, token]);
+
   const posterImage = cover || './images/imageNotFound.png';
 
   return (
@@ -51,6 +78,11 @@ const Book = ({loading, book, book: {title, author, description, cover, tags, le
 Book.propTypes = {
   book: PropTypes.instanceOf(Object).isRequired,
   loading: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
+  match: PropTypes.instanceOf(Object).isRequired,
+  fetchBookRequest: PropTypes.func.isRequired,
+  fetchBookSuccess: PropTypes.func.isRequired,
+  fetchBookFailure: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
