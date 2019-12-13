@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {signIn} from '../../actions/actions';
 
 const SignIn = ({signInUser}) => {
+  const [inputText, setstateInput] = useState('');
+  const [errorText, setstateError] = useState('');
 
   return (
     <div className="row">
@@ -14,8 +16,24 @@ const SignIn = ({signInUser}) => {
         <div className="m-2">
           <label htmlFor="username">
             <p className="mb-0"><b>Username</b></p>
-            <input className="col-12" type="text" name="username" id="username" placeholder="type Username" />
+            <input
+              value={inputText}
+              onChange={(e) => {
+                setstateInput(e.target.value);
+                if(e.target.value.length < 4 || e.target.value.length > 16) {
+                  setstateError('error');
+                } else {
+                  setstateError('');
+                }
+              }}
+              className="col-12"
+              type="text"
+              name="username"
+              id="username"
+              placeholder="type Username"
+            />
           </label>
+          {errorText ? <p className="text-danger">Field is not valid</p> : null}
         </div>
         <div>
           <button className="col-2" type="button">Sign-In</button>
