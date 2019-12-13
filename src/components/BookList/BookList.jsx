@@ -5,6 +5,7 @@ import BookItem from './BookItem';
 import Filters from '../Filters/Filters';
 import {booksRequest, booksSuccess, booksFailure} from '../../actions/actions';
 import CallApi from '../../api/api';
+import Spinner from '../../spinner/spinner'
 
 const BookList = ({books, token, loading, fetchBooksRequest, fetchBooksSuccess, fetchBooksFailure}) => {
   useEffect(() => {
@@ -15,13 +16,17 @@ const BookList = ({books, token, loading, fetchBooksRequest, fetchBooksSuccess, 
     })
   }, [fetchBooksRequest, fetchBooksSuccess, token]);
 
+  const spinner = (loading) ? <Spinner /> : null;
+  const booksArea = (books && !loading) ? (books.map((item)=> <BookItem key={item.id} book={item} />)) : null;
+
   return (
     <div className="row p-3">
       <div className="col-10">
         <Filters />
       </div>
       <div className="row">
-        {books.map((item)=> <BookItem key={item.id} book={item} />)}
+        {spinner}
+        {booksArea}
       </div>
     </div>
   )
