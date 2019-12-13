@@ -16,18 +16,14 @@ const BookItem = ({book}) => {
           {' '}
           {price}
         </span>
-        <Link to={`/book/${id}`} className="btn btn-secondary col-4">View</Link>
+        <Link to={`/books/${id}`} className="btn btn-secondary col-4">View</Link>
       </p>
     </div>
   )
 }
 
-BookItem.defaultProps = {
-  book: undefined,
-}
-
 BookItem.propTypes = {
-  book: PropTypes.instanceOf(Object),
+  book: PropTypes.instanceOf(Object).isRequired,
 }
 
 export default BookItem;
