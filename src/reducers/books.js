@@ -1,9 +1,13 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  user: undefined,
-  books: undefined,
-  book: undefined,
+  user: {
+    username: undefined,
+    avatar: undefined,
+    token: undefined,
+  },
+  books: [],
+  book: {},
   filters: {
     search: '',
     price: 'all',
@@ -27,7 +31,11 @@ const books = (state = initialState, action) => {
     case actionTypes.SIGNOUT:
       return {
         ...state,
-        user: undefined,
+        user: {
+          username: undefined,
+          avatar: undefined,
+          token: undefined,
+        },
       };
     case actionTypes.SHOW_FILTERED_BOOKS:
       return {
@@ -40,7 +48,7 @@ const books = (state = initialState, action) => {
     case actionTypes.FETCH_BOOKS_REQUEST:
       return {
         ...state,
-        books: undefined,
+        books: [],
         loading: true,
         error: null,
       };
@@ -54,14 +62,14 @@ const books = (state = initialState, action) => {
     case actionTypes.FETCH_BOOKS_FAILURE:
       return {
         ...state,
-        books: undefined,
+        books: [],
         loading: false,
         error: action.error,
       };
     case actionTypes.FETCH_BOOK_REQUEST:
       return {
         ...state,
-        book: undefined,
+        book: {},
         loading: true,
         error: null,
       };
@@ -75,7 +83,7 @@ const books = (state = initialState, action) => {
     case actionTypes.FETCH_BOOK_FAILURE:
       return {
         ...state,
-        book: undefined,
+        book: {},
         loading: false,
         error: action.error,
       };
