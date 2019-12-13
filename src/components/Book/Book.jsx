@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
-// import PropTypes from 'prop-types'
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux';
+import {bookRequest, bookSuccess, bookFailure} from '../../actions/actions';
 import BookPrice from './BookPrice';
+import Spinner from '../../spinner/spinner';
+import CallApi from '../../api/api';
 
-export default class Book extends Component {
-  constructor() {
-    super();
-    this.state = {
-      movie: [],
-    }
-  }
+const Book = ({
+  match,
+  token,
+  loading,
+  book,
+  book: {
+    title,
+    author,
+    description,
+    cover, tags,
+    level,
+    count,
+    price,
+  },
+  fetchBookSuccess,
+  fetchBookRequest,
+  fetchBookFailure,
+}) => {
+  
+  useEffect(() => {
+    CallApi.get(`/books/${match.params.id}`, token)
+    .then((data) => {
+      fetchBookRequest();
+      setTimeout(() => fetchBookSuccess(data), 2000);
+  })
+  }, [fetchBookRequest, fetchBookSuccess, match.params.id, token]);
 
-  render() {
-    const {
-      movie:{
-        title,
-        author,
-        level,
-        description,
-        cover,
-        tags,
-      },
-    } = this.state;
-    const posterImage = cover || './images/imageNotFound.png';
-    return (
+  const posterImage = cover || './images/imageNotFound.png';
+
+  return (
+    (book.title && !loading) ? (
       <div className="m-3">
         <div className="row">
           <img className="col-4" src={posterImage} alt="poster" />
@@ -49,7 +63,7 @@ export default class Book extends Component {
             </p>
           </div>
           <div className="col-4">
-            <BookPrice />
+            <BookPrice price={price} maxBooks={count} />
           </div>
         </div>
         <p>
@@ -57,6 +71,30 @@ export default class Book extends Component {
           {description}
         </p>
       </div>
-    )
-  }
+    ) : <Spinner />
+  )
 }
+
+Book.propTypes = {
+  book: PropTypes.instanceOf(Object).isRequired,
+  loading: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
+  match: PropTypes.instanceOf(Object).isRequired,
+  fetchBookRequest: PropTypes.func.isRequired,
+  fetchBookSuccess: PropTypes.func.isRequired,
+  fetchBookFailure: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  book: state.books.book,
+  loading: state.books.loading,
+  token: state.books.user.token,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchBookRequest: () => dispatch(bookRequest()),
+  fetchBookSuccess: (book) => dispatch(bookSuccess(book)),
+  fetchBookFailure: (error) => dispatch(bookFailure(error)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);
