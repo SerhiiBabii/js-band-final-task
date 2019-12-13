@@ -2,6 +2,16 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {signIn} from '../../actions/actions';
+import CallApi from '../../api/api';
+
+const fetchFOrSignin = (name, func) => {
+  CallApi.post('/signin', {
+    username: name,
+  }).then((data) => {
+    const {username, avatar, token} = data;
+    func(username, avatar, token);
+  })
+}
 
 const SignIn = ({signInUser}) => {
   const [inputText, setstateInput] = useState('');
@@ -36,7 +46,7 @@ const SignIn = ({signInUser}) => {
           {errorText ? <p className="text-danger">Field is not valid</p> : null}
         </div>
         <div>
-          <button className="col-2" type="button">Sign-In</button>
+          <button onClick={() => fetchFOrSignin(inputText, signInUser)} disabled={!!errorText} className="col-2" type="button">Sign-In</button>
         </div>
       </div>
     </div>
