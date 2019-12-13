@@ -1,6 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {signIn} from '../../actions/actions';
 
-const SignIn = () => {
+const SignIn = ({signInUser}) => {
+
   return (
     <div className="row">
       <div className="col-12 text-center">
@@ -21,4 +25,12 @@ const SignIn = () => {
   )
 }
 
-export default SignIn;
+SignIn.propTypes = {
+  signInUser: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  signInUser: (username, avatar, token) => dispatch(signIn(username, avatar, token)),
+})
+
+export default connect(null, mapDispatchToProps)(SignIn);
