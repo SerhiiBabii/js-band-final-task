@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BookItem from './BookItem';
 import Filters from '../Filters/Filters';
 import {booksRequest, booksSuccess, booksFailure} from '../../actions/actions';
+import CallApi from '../../api/api';
 
 const BookList = ({books, token, loading, fetchBooksRequest, fetchBooksSuccess, fetchBooksFailure}) => {
+  useEffect(() => {
+    CallApi.get('/books', token)
+    .then((data) => {
+      fetchBooksRequest();
+      setTimeout(() => fetchBooksSuccess(data), 2000);
+    })
+  }, [fetchBooksRequest, fetchBooksSuccess, token]);
 
   return (
     <div className="row p-3">
