@@ -15,7 +15,7 @@ const fetchFOrSignin = (name, func) => {
 
 const SignIn = ({signInUser}) => {
   const [inputText, setstateInput] = useState('');
-  const [errorText, setstateError] = useState('');
+  const [errorText, setstateError] = useState('error');
 
   return (
     <div className="row">
