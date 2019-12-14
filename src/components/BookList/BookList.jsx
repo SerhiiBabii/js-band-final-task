@@ -6,8 +6,10 @@ import Filters from '../Filters/Filters';
 import {booksRequest, booksSuccess, booksFailure} from '../../actions/actions';
 import CallApi from '../../api/api';
 import Spinner from '../../spinner/spinner'
+import filterForTitle from '../../filters/filterForTitle';
+import filterForPrice from '../../filters/filterForPrice';
 
-const BookList = ({books, token, loading, fetchBooksRequest, fetchBooksSuccess, fetchBooksFailure}) => {
+const BookList = ({books, token, loading, search, price, fetchBooksRequest, fetchBooksSuccess, fetchBooksFailure}) => {
   useEffect(() => {
     CallApi.get('/books', token)
     .then((data) => {
@@ -17,7 +19,8 @@ const BookList = ({books, token, loading, fetchBooksRequest, fetchBooksSuccess, 
   }, [fetchBooksRequest, fetchBooksSuccess, token]);
 
   const spinner = (loading) ? <Spinner /> : null;
-  const booksArea = (books && !loading) ? (books.map((item)=> <BookItem key={item.id} book={item} />)) : null;
+  const currentTodoList = filterForTitle(filterForPrice(books, price), search);
+  const booksArea = (books && !loading) ? (currentTodoList.map((item)=> <BookItem key={item.id} book={item} />)) : null;
 
   return (
     <div className="row p-3">
@@ -36,6 +39,8 @@ BookList.propTypes = {
   books: PropTypes.instanceOf(Array).isRequired,
   token: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  search: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
   fetchBooksRequest: PropTypes.func.isRequired,
   fetchBooksSuccess: PropTypes.func.isRequired,
   fetchBooksFailure: PropTypes.func.isRequired,
@@ -45,6 +50,8 @@ const mapStateToProps = (state) => ({
   books: state.books.books,
   token: state.books.user.token,
   loading: state.books.loading,
+  search: state.books.filters.search,
+  price: state.books.filters.price,
 })
 
 const mapDispatchToProps = (dispatch) => ({
