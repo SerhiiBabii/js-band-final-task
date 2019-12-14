@@ -12,6 +12,7 @@ const Book = ({
   loading,
   book,
   book: {
+    id,
     title,
     author,
     description,
@@ -63,7 +64,7 @@ const Book = ({
             </p>
           </div>
           <div className="col-4">
-            <BookPrice price={price} maxBooks={count} />
+            <BookPrice id={id} price={price} maxBooks={count} />
           </div>
         </div>
         <p>

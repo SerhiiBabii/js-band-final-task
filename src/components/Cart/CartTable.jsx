@@ -1,27 +1,31 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import CartItem from "./CartItem";
 import CartTotalPrice from "./CartTotalPrice";
 
-const CartTable = ({cart}) => {
+
+const CartTable = ({cartItems, orderTotal}) => {
   return (
     <div>
       <table className="table m-3">
         <tbody>
-          {cart ? cart.map((item) => <CartItem key={item.id} currentCart={item} />) : null}
+          {cartItems ? cartItems.map((item) => <CartItem key={item.id} currentCart={item} />) : null}
         </tbody>
       </table>
-      <CartTotalPrice cart={cart || null} />
+      <CartTotalPrice orderTotal={orderTotal} />
     </div>
   )
 }
 
-CartTable.defaultProps = {
-  cart: undefined,
-}
-
 CartTable.propTypes = {
-  cart: PropTypes.instanceOf(Object),
+  cartItems: PropTypes.instanceOf(Object).isRequired,
+  orderTotal: PropTypes.string.isRequired,
 }
 
-export default CartTable;
+const mapStateToProps = (state) => ({
+  cartItems: state.books.cart.cartItems,
+  orderTotal: state.books.cart.orderTotal,
+});
+
+export default connect(mapStateToProps)(CartTable);
