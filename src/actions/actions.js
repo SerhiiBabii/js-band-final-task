@@ -25,9 +25,9 @@ export const signOut = () => ({
   type: actionTypes.SIGNOUT,
 });
 
-export const addBook = (book, quantity) => ({
+export const addBook = (bookId, quantity) => ({
   type: actionTypes.ADD_BOOK,
-  book,
+  bookId,
   quantity,
 });
 
