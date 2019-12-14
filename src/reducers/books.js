@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import updateOrder from './additionFunctions/updateOrder';
 
 const initialState = {
   user: {
@@ -12,7 +13,10 @@ const initialState = {
     search: '',
     price: 'all',
   },
-  cart: undefined,
+  cart: {
+    cartItems: [],
+    orderTotal: undefined,
+  },
   loading: false,
   error: null,
 };
@@ -90,18 +94,15 @@ const books = (state = initialState, action) => {
     case actionTypes.ADD_BOOK:
       return {
         ...state,
-        cart: [
-          ...state.cart,
-          {
-            book: action.book,
-            quantity: action.quantity,
-          },
-        ],
+        cart: updateOrder(action.bookId, action.quantity, state),
       };
     case actionTypes.SEND_BOOK:
       return {
         ...state,
-        cart: undefined,
+        cart: {
+          cartItems: [],
+          orderTotal: undefined,
+        },
       };
     default:
       return state;
