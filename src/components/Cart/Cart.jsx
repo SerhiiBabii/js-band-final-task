@@ -1,22 +1,32 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import CartEmpty from './CartEmpty'
-import CartTable from './CartTable'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import CartEmpty from './CartEmpty';
+import CartTable from './CartTable';
+import {sendBook} from '../../actions/actions';
 
-const Cart = ({cart}) => {
+const Cart = ({cartItems, purchase}) => {
   return (
     <div>
-      {cart ? <CartTable /> : <CartEmpty />}
+      <div className="text-right">
+        <button onClick={purchase} disabled={!cartItems.length} className="btn btn-primary" type="button">Purchase</button>
+      </div>
+      {cartItems.length ? <CartTable /> : <CartEmpty />}
     </div>
   )
 }
 
-Cart.defaultProps = {
-  cart: undefined,
-}
-
 Cart.propTypes = {
-  cart: PropTypes.instanceOf(Object),
+  cartItems: PropTypes.instanceOf(Object).isRequired,
+  purchase: PropTypes.func.isRequired,
 }
 
-export default Cart;
+const mapStateToProps = (state) => ({
+  cartItems: state.books.cart.cartItems,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  purchase: () => dispatch(sendBook()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
