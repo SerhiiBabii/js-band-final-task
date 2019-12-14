@@ -42,4 +42,17 @@ export default class CallApi {
       body: JSON.stringify(body),
     });
   }
+
+  static postWithToken(url, token, body) {
+    return fetchApi(`${API_URL}${url}`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  }
 }
