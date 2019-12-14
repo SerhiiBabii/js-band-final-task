@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {addBook} from '../../actions/actions';
 
-const BookPrice = ({price, maxBooks}) => {
+const BookPrice = ({id, price, maxBooks, addBookToCart}) => {
   const [state, setstate] = useState(1);
 
   return (
@@ -33,15 +35,21 @@ const BookPrice = ({price, maxBooks}) => {
         <span className="col-2">{(price * state).toFixed(2)}</span>
       </p>
       <div className="text-right">
-        <button disabled={state < 1} className="btn btn-secondary" type="button">Add to cart</button>
+        <button onClick={()=> addBookToCart(id, state)} disabled={state < 1} className="btn btn-secondary" type="button">Add to cart</button>
       </div>
     </div>
   )
 }
 
 BookPrice.propTypes = {
+  id: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   maxBooks: PropTypes.number.isRequired,
+  addBookToCart: PropTypes.func.isRequired,
 }
 
-export default BookPrice
+const mapDispatchToProps = (dispatch) => ({
+  addBookToCart: (bookId, quantity) => dispatch(addBook(bookId, quantity)),
+})
+
+export default connect(null, mapDispatchToProps)(BookPrice)
