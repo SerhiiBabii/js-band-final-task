@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import {signIn} from '../../actions/actions';
 import CallApi from '../../api/api';
 
@@ -13,9 +14,13 @@ const fetchFOrSignin = (name, func) => {
   })
 }
 
-const SignIn = ({signInUser}) => {
+const SignIn = ({user, signInUser}) => {
   const [inputText, setstateInput] = useState('');
   const [errorText, setstateError] = useState('error');
+
+  if(user.username) {
+    return <Redirect to="/books" />
+  }
 
   return (
     <div className="row">
@@ -43,7 +48,7 @@ const SignIn = ({signInUser}) => {
               placeholder="type Username"
             />
           </label>
-          {errorText ? <p className="text-danger">Field is not valid</p> : null}
+          {/* {errorText ? <p className="text-danger">Field is not valid</p> : null} */}
         </div>
         <div>
           <button onClick={() => fetchFOrSignin(inputText, signInUser)} disabled={!!errorText} className="col-2" type="button">Sign-In</button>
@@ -54,11 +59,16 @@ const SignIn = ({signInUser}) => {
 }
 
 SignIn.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
   signInUser: PropTypes.func.isRequired,
 }
+
+const mapStateToProps = (state) => ({
+  user: state.books.user,
+})
 
 const mapDispatchToProps = (dispatch) => ({
   signInUser: (username, avatar, token) => dispatch(signIn(username, avatar, token)),
 })
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
