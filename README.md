@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SerhiiBabii/js-band-final-task.svg?branch=master)](https://travis-ci.org/SerhiiBabii/js-band-final-task)
+
 # Final task
 
 ## Before launching the project it is necessary:
