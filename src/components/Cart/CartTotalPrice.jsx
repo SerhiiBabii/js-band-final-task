@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CartTotalPrice = ({orderTotal}) => {
   return (
-    <div>
+    <div className="text-right">
       <b>
         Total price, $
         {orderTotal}

@@ -40,6 +40,10 @@ const books = (state = initialState, action) => {
           avatar: undefined,
           token: undefined,
         },
+        cart: {
+          cartItems: [],
+          orderTotal: undefined,
+        },
       };
     case actionTypes.SHOW_FILTERED_BOOKS:
       return {
