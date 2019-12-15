@@ -21,9 +21,9 @@ const App = () => {
             <Redirect to="/signin" />
           </Route>
           <Route path="/signin" component={SignIn} />
-          <Route exact path="/books" component={BookList} />
-          <Route path="/books/:id" component={Book} />
-          <Route path="/cart" component={Cart} />
+          <PrivateRoute exact path="/books" component={BookList} />
+          <PrivateRoute path="/books/:id" component={Book} />
+          <PrivateRoute path="/cart" component={Cart} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </div>
