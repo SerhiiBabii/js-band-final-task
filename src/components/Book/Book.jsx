@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bookRequest, bookSuccess, bookFailure} from '../../actions/actions';
 import BookPrice from './BookPrice';
@@ -51,22 +51,22 @@ const Book = ({
           <img className="col-4" src={posterImage} alt="poster" />
           <div className="col-4">
             <p>
-              Book name:
+              <b>Book name:</b>
               {' '}
               {title}
             </p>
             <p>
-              Book author:
+              <b>Book author:</b>
               {' '}
               {author}
             </p>
             <p>
-              Book level:
+              <b>Book level:</b>
               {' '}
               {level}
             </p>
             <p>
-              Book tags:
+              <b>Book tags:</b>
               {' '}
               {tags}
             </p>
@@ -76,7 +76,8 @@ const Book = ({
           </div>
         </div>
         <p>
-          Description: 
+          <b>Description:</b>
+          {' '}
           {description}
         </p>
       </div>
