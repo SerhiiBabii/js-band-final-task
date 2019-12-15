@@ -38,3 +38,68 @@ You can see project page:
 - The second method:
 
   > https://serhiibabii.github.io/js-band-final-task/
+
+## Structure of the project:
+```
+├── public
+│   ├── imgages
+│   │   ├── cart.svg
+│   │   ├── ciklum-logo.png
+│   │   ├── defaultAvatar.png
+│   │   ├── error404.jpg
+│   │   └── imageNotFound.png
+│   └── index.html
+├── src
+│   ├── actions
+│   │   ├── actions.js
+│   │   └── actionTypes.js
+│   ├── api
+│   │   └── api.js
+│   ├── components
+│   │   ├── Book
+│   │   │   ├── Book.jsx
+│   │   │   └── BookPrice.jsx
+│   │   ├── BooksList
+│   │   │   ├── BookItem.jsx
+│   │   │   └── BookList.jsx
+│   │   ├── Cart
+│   │   │   ├── Cart.jsx
+│   │   │   ├── CartEmpty.jsx
+│   │   │   ├── CartItem.jsx
+│   │   │   ├── CartTable.jsx
+│   │   │   └── CartTotalPrice.jsx
+│   │   ├── Filters
+│   │   │   └── Filters.jsx
+│   │   ├── Header
+│   │   │   ├── Header.jsx
+│   │   │   └── HeaderUser.jsx
+│   │   ├── NotFound
+│   │   │   └── NotFound.jsx
+│   │   ├── PrivateRoute
+│   │   │   └── PrivateRoute.jsx
+│   │   └── SignIn
+│   │       └── SignIn.jsx
+│   ├── filters
+│   │   ├── filterForPrice.js
+│   │   └── filterForTitle.js
+│   ├── localStorage
+│   │   └── localStorage.js
+│   ├── reducers
+│   │   ├── additionFunctions
+│   │   │   ├── updateCartItem.js
+│   │   │   ├── updateCartItems.js
+│   │   │   ├── updateOrder.js
+│   │   │   └── updateTotalPrice.js
+│   │   ├── books.js
+│   │   └── reducers.js
+│   └── spinner.js
+│       ├── spinner.css
+│       └── spinner.jsx
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc
+├── .travis.yml
+├── package-lock.json
+├── package.json
+└── README.md
+```
