@@ -29,7 +29,7 @@ const Book = ({
 }) => {
 
   useEffect(() => {
-    if(books.length > match.params.id || !isNaN(match.params.id)){
+    if(books.length > match.params.id && !isNaN(match.params.id)){
       CallApi.get(`/books/${match.params.id}`, token)
       .then((data) => {
         fetchBookRequest();
