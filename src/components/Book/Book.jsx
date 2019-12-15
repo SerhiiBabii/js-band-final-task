@@ -5,6 +5,7 @@ import {bookRequest, bookSuccess, bookFailure} from '../../actions/actions';
 import BookPrice from './BookPrice';
 import Spinner from '../../spinner/spinner';
 import CallApi from '../../api/api';
+import NotFound from '../NotFound/NotFound';
 
 const Book = ({
   match,
@@ -21,20 +22,27 @@ const Book = ({
     count,
     price,
   },
+  books,
   fetchBookSuccess,
   fetchBookRequest,
   fetchBookFailure,
 }) => {
-  
+
   useEffect(() => {
-    CallApi.get(`/books/${match.params.id}`, token)
-    .then((data) => {
-      fetchBookRequest();
-      setTimeout(() => fetchBookSuccess(data), 2000);
-  })
-  }, [fetchBookRequest, fetchBookSuccess, match.params.id, token]);
+    if(books.length > match.params.id || !isNaN(match.params.id)){
+      CallApi.get(`/books/${match.params.id}`, token)
+      .then((data) => {
+        fetchBookRequest();
+        setTimeout(() => fetchBookSuccess(data), 2000);
+      })
+    }
+  }, [books.length, fetchBookRequest, fetchBookSuccess, match.params.id, token]);
 
   const posterImage = cover || './images/imageNotFound.png';
+  
+  if(books.length < match.params.id || isNaN(match.params.id)) {
+    return <NotFound />
+  }
 
   return (
     (book.title && !loading) ? (
@@ -78,6 +86,7 @@ const Book = ({
 
 Book.propTypes = {
   book: PropTypes.instanceOf(Object).isRequired,
+  books: PropTypes.instanceOf(Object).isRequired,
   loading: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
   match: PropTypes.instanceOf(Object).isRequired,
@@ -87,6 +96,7 @@ Book.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  books: state.books.books,
   book: state.books.book,
   loading: state.books.loading,
   token: state.books.user.token,
