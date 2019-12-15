@@ -9,14 +9,20 @@ import SignIn from './components/SignIn/SignIn';
 import NotFound from './components/NotFound/NotFound';
 import BookList from './components/BookList/BookList';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import { loadState } from './localStorage/localStorage';
+import { saveState, loadState } from './localStorage/localStorage';
 import {signIn} from './actions/actions';
 
 const App = ({signInUser}) => {
 
   useEffect(() => {
-    const {user: {username, avatar, token}} = loadState('user');
-    signInUser(username, avatar, token);
+    const conditionStore = loadState('user');
+    if(!conditionStore) {
+      saveState({user: {}});
+    }
+    if(conditionStore) {
+      const {user: {username, avatar, token}} = loadState('user');
+      signInUser(username, avatar, token);
+    }
   }, [signInUser]);
 
   return (
